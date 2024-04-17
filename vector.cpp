@@ -4,6 +4,10 @@
 #include <stdexcept>
 #include <iostream>
 #include <string>
+#include <cmath>
+#include <numeric>
+#include <vector>
+#include <algorithm>
 
 thmath::Vector::Vector(int size, double* entries)
 {
@@ -29,6 +33,35 @@ double thmath::Vector::get_component(const int index)
 int thmath::Vector::get_size()
 {
     return this->size;
+}
+
+double thmath::Vector::norm(double p)
+{
+    double max_abs = *std::max_element(this->entries, this->entries + this->size, [](double a, double b) {
+        return std::abs(a) < std::abs(b);
+    });
+
+    std::vector<double> scaled_entries(this->size);
+    std::transform(this->entries, this->entries + this->size, scaled_entries.begin(), [max_abs](double x) {
+        return x / max_abs;
+    });
+
+    return max_abs * std::pow(
+        std::accumulate(scaled_entries.begin(), scaled_entries.end(), 0.0, [p](double total, double x) {
+            return total + std::pow(std::abs(x), p);
+        }),
+        1.0 / p
+    );
+}
+
+double thmath::Vector::norm()
+{
+    return thmath::Vector::norm(2);
+}
+
+double thmath::Vector::infinity_norm()
+{
+    return *std::max_element(this->entries, this->entries + this->size);
 }
 
 thmath::Vector thmath::Vector::operator+(const Vector& vec)
