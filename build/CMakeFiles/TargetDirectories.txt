@@ -1,3 +1,0 @@
-C:/Users/mihne/OneDrive/Desktop/thmath/build/CMakeFiles/main.dir
-C:/Users/mihne/OneDrive/Desktop/thmath/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/mihne/OneDrive/Desktop/thmath/build/CMakeFiles/ZERO_CHECK.dir
