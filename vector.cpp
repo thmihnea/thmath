@@ -1,6 +1,7 @@
 #include "vector.h"
 #include "exception/illegal_access_exception.h"
 #include "exception/different_size_exception.h"
+#include "exception/messages.h"
 #include <stdexcept>
 #include <iostream>
 #include <string>
@@ -17,25 +18,24 @@ thmath::Vector::Vector(int size, double* entries)
 
 thmath::Vector::~Vector()
 {
-    
+    delete[] this->entries;
 }
 
-double thmath::Vector::get_component(const int index)
+double thmath::Vector::get_component(const int index) const
 {
     if (index >= this->size) 
     {
-        throw IllegalAccessException("Attempted an illegal vector access of a component that does not exist.");
-        return NULL;
+        throw IllegalAccessException(ILLEGAL_ACCESS_MESSAGE);
     }
     return this->entries[index];
 }
 
-int thmath::Vector::get_size()
+int thmath::Vector::get_size() const
 {
     return this->size;
 }
 
-double thmath::Vector::norm(double p)
+double thmath::Vector::norm(double p) const
 {
     double max_abs = *std::max_element(this->entries, this->entries + this->size, [](double a, double b) {
         return std::abs(a) < std::abs(b);
@@ -54,21 +54,58 @@ double thmath::Vector::norm(double p)
     );
 }
 
-double thmath::Vector::norm()
+double thmath::Vector::norm() const
 {
-    return thmath::Vector::norm(2);
+    return norm(2);
 }
 
-double thmath::Vector::infinity_norm()
+double thmath::Vector::infinity_norm() const
 {
     return *std::max_element(this->entries, this->entries + this->size);
 }
 
-thmath::Vector thmath::Vector::operator+(const Vector& vec)
+double thmath::Vector::dot_product(const Vector& vec) const
+{
+    if (this->size != vec.size) 
+    {
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
+    }
+    return std::inner_product(
+        this->entries, this->entries + this->size, vec.entries, 0.0
+    );
+}
+
+thmath::Vector& thmath::Vector::normalized(double p)
+{
+    double p_norm = norm(p);
+    std::transform(
+        this->entries, this->entries + this->size, this->entries, [p_norm](double element){
+            return element / p_norm;
+        }
+    );
+    return *this;
+}
+
+thmath::Vector& thmath::Vector::normalized()
+{
+    return normalized(2);
+}
+
+double thmath::Vector::angle(const Vector& vec, bool cosine) const
 {
     if (this->size != vec.size)
     {
-        throw DifferentSizeException("Attempted to add vectors of different sizes.");
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
+    }
+    double cos = dot_product(vec) / (norm() * vec.norm());
+    return cosine ? cos : std::acos(cos);
+}
+
+thmath::Vector thmath::Vector::operator+(const Vector& vec) const
+{
+    if (this->size != vec.size)
+    {
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
     }
     double* final_entries = new double[this->size];
     for (int index = 0; index < this->size; index++)
@@ -78,11 +115,11 @@ thmath::Vector thmath::Vector::operator+(const Vector& vec)
     return Vector(this->size, final_entries);
 }
 
-thmath::Vector thmath::Vector::operator-(const Vector& vec)
+thmath::Vector thmath::Vector::operator-(const Vector& vec) const
 {
     if (this->size != vec.size)
     {
-        throw DifferentSizeException("Attempted to subtract vectors of different sizes.");
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
     }
     double* final_entries = new double[this->size];
     for (int index = 0; index < this->size; index++)
@@ -92,8 +129,8 @@ thmath::Vector thmath::Vector::operator-(const Vector& vec)
     return Vector(this->size, final_entries);
 }
 
-std::string thmath::Vector::to_string()
-{
+std::string thmath::Vector::to_string() const
+{ 
     std::string s = "Vector{size=" + std::to_string(this->size) + ", elements=[";
     for (int index = 0; index < this->size - 1; index++)
     {

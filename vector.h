@@ -63,7 +63,7 @@ namespace thmath
          * in retrieving
          * @return The component at the i-th position.
         */
-        double get_component(const int index);
+        double get_component(const int index) const;
 
         /**
          * Return the size of the vector, i.e. the
@@ -72,7 +72,7 @@ namespace thmath
          * 
          * @return The size of the vector.
         */
-        int get_size();
+        int get_size() const;
 
         /**
          * Compute the Lp norm of this vector object,
@@ -88,7 +88,7 @@ namespace thmath
          * compute the norm
          * @return The norm.
         */
-        double norm(double p);
+        double norm(double p) const;
 
         /**
          * Return the Euclidian (L2) norm of this
@@ -97,7 +97,7 @@ namespace thmath
          * 
          * @return The Euclidian (L2) norm of the vector.
         */
-        double norm();
+        double norm() const;
 
         /**
          * Return the infinity-norm of this vector, i.e.
@@ -110,7 +110,54 @@ namespace thmath
          * 
          * @return The infinity norm.
         */
-        double infinity_norm();
+        double infinity_norm() const;
+
+        /**
+         * Perform the dot product between two
+         * vectors - note that in the vector space
+         * R^n this returns a real value.
+         * 
+         * @param vec The vector which should be
+         * dotted (scalar product) with the current
+         * vector object.
+         * @return A real value representing the
+         * scalar product between the two quantities.
+        */
+        double dot_product(const Vector& vec) const;
+
+        /**
+         * Normalizes the vector by its Lp norm.
+         * 
+         * @param p The parameter which shall be 
+         * used in the Lp norm computation.
+         * @return The same vector object, but
+         * normalized by its Lp norm.
+        */
+        Vector& normalized(double p);
+
+        /**
+         * Normalizes the vector by its Euclidian norm.
+         * 
+         * @return The same vector object, but
+         * normalized by its L2 norm.
+        */
+        Vector& normalized();
+
+        /**
+         * Return the angle between two n-dimensional
+         * vectors. For R^2 and R^3, this is obvious
+         * and intuitive; however, for a general R^n
+         * vector space, we define the angle as the dot product
+         * over the vectors' product of L2 norms.
+         * 
+         * @param vec The other vector which we are
+         * measuring the angle with respect to.
+         * @param cosine Whether or not the cosine shall
+         * be returned instead of the angle. If true,
+         * we return the cosine. It is by default set to false.
+         * @return The angle between the two vectors.
+        */
+        double angle(const Vector& vec, bool cosine = false) const;
 
         /**
          * Operator overloading for vector addition.
@@ -120,7 +167,7 @@ namespace thmath
          * @return A new vector object representing the
          * sum of the two vectors.
         */
-        Vector operator+(const Vector& vec);
+        Vector operator+(const Vector& vec) const;
 
         /**
          * Operator overloading for vector subtraction.
@@ -130,7 +177,7 @@ namespace thmath
          * @return A new vector object representing the
          * difference of the two vectors.
         */
-        Vector operator-(const Vector& vec);
+        Vector operator-(const Vector& vec) const;
 
         /**
          * Stringify the vector object for it to be
@@ -142,9 +189,8 @@ namespace thmath
          * 
          * @return The stringified version of the vector.
         */
-        std::string to_string();
+        std::string to_string() const;
     };
 }
-
 
 #endif
