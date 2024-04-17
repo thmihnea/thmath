@@ -5,18 +5,18 @@
 #include <iostream>
 #include <string>
 
-Vector::Vector(int size, double* entries)
+thmath::Vector::Vector(int size, double* entries)
 {
     this->size = size;
     this->entries = entries;
 }
 
-Vector::~Vector()
+thmath::Vector::~Vector()
 {
     
 }
 
-double Vector::get_component(const int index)
+double thmath::Vector::get_component(const int index)
 {
     if (index >= this->size) 
     {
@@ -26,12 +26,12 @@ double Vector::get_component(const int index)
     return this->entries[index];
 }
 
-int Vector::get_size()
+int thmath::Vector::get_size()
 {
     return this->size;
 }
 
-Vector Vector::operator+(const Vector& vec)
+thmath::Vector thmath::Vector::operator+(const Vector& vec)
 {
     if (this->size != vec.size)
     {
@@ -45,7 +45,7 @@ Vector Vector::operator+(const Vector& vec)
     return Vector(this->size, final_entries);
 }
 
-Vector Vector::operator-(const Vector& vec)
+thmath::Vector thmath::Vector::operator-(const Vector& vec)
 {
     if (this->size != vec.size)
     {
@@ -59,7 +59,7 @@ Vector Vector::operator-(const Vector& vec)
     return Vector(this->size, final_entries);
 }
 
-std::string Vector::to_string()
+std::string thmath::Vector::to_string()
 {
     std::string s = "Vector{size=" + std::to_string(this->size) + ", elements=[";
     for (int index = 0; index < this->size - 1; index++)

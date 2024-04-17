@@ -5,25 +5,30 @@
 
 #include <string>
 
-class Vector
+namespace thmath
 {
-private:
-    double* entries;
-    int size;
-public:
-    Vector(const int size, double* entries);
+    class Vector
+    {
+    private:
+        double* entries;
+        int size;
 
-    ~Vector();
+    public:
+        Vector(const int size, double* entries);
 
-    double get_component(const int index);
+        ~Vector();
 
-    int get_size();
+        double get_component(const int index);
 
-    Vector operator+(const Vector& vec);
+        int get_size();
 
-    Vector operator-(const Vector& vec);
+        Vector operator+(const Vector& vec);
 
-    std::string to_string();
-};
+        Vector operator-(const Vector& vec);
+
+        std::string to_string();
+    };
+}
+
 
 #endif
