@@ -310,8 +310,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\main.cpp" />
-    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\illegal_access_exception.cpp" />
-    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\different_size_exception.cpp" />
+    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\exception\illegal_access_exception.cpp" />
+    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\exception\different_size_exception.cpp" />
     <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\vector.cpp" />
   </ItemGroup>
   <ItemGroup>

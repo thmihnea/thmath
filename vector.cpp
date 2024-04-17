@@ -1,6 +1,6 @@
 #include "vector.h"
-#include "illegal_access_exception.h"
-#include "different_size_exception.h"
+#include "exception/illegal_access_exception.h"
+#include "exception/different_size_exception.h"
 #include <stdexcept>
 #include <iostream>
 #include <string>

@@ -4,10 +4,10 @@
     <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\illegal_access_exception.cpp">
+    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\exception\illegal_access_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\different_size_exception.cpp">
+    <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\exception\different_size_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\mihne\OneDrive\Desktop\thmath\vector.cpp">
