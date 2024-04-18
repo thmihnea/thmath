@@ -26,6 +26,9 @@
 #ifndef __THMATH_COMPLEX_
 #define __THMATH_COMPLEX_
 
+#include <algorithm>
+#include <string>
+
 namespace thmath
 {
     class Complex
@@ -43,6 +46,16 @@ namespace thmath
          * @return A new complex number object.
         */
         Complex(double real, double imaginary);
+        
+        /**
+         * Initializer list constructor for the Complex class.
+         * This allows the object to be constructed by initializing
+         * the real and imaginary parts directly from an initializer list.
+         * 
+         * @param args The initializer list containing the real and imaginary parts.
+         * @return A new complex number object.
+        */
+        Complex(std::initializer_list<double> args);
 
         /**
          * Destructor for the Complex class.
@@ -139,6 +152,15 @@ namespace thmath
          * @return The result of the multiplication operation.
         */
         Complex& operator*=(const Complex& complex);
+        
+        /**
+         * Stringify the complex number object for it to be
+         * easily printed to console or for any other particular
+         * uses.
+         * 
+         * @return The stringified version of the complex number.
+        */
+        std::string to_string() const;
     };
 }
 

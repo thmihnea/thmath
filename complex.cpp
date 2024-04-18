@@ -22,12 +22,27 @@
  */
 
 #include "complex.h"
+#include "exception/illegal_size_exception.h"
+#include "exception/messages.h"
 #include <cmath>
+#include <algorithm>
+#include <sstream>
 
 thmath::Complex::Complex(double real, double imaginary)
 {
     this->real = real;
     this->imaginary = imaginary;
+}
+
+thmath::Complex::Complex(std::initializer_list<double> args)
+{
+    if (args.size() != 2)
+    {
+        throw IllegalSizeException(ILLEGAL_SIZE_MESSAGE);
+    }
+    auto it = args.begin();
+    this->real = *it;
+    this->imaginary = *(it++);
 }
 
 thmath::Complex::~Complex()
@@ -112,5 +127,12 @@ thmath::Complex& thmath::Complex::operator*=(const Complex& complex)
     real = result_real;
     imaginary = result_imaginary;
     return *this;
+}
+
+std::string thmath::Complex::to_string() const
+{
+    std::ostringstream stream;
+    stream << "Complex={real=" << this->real << ", imaginary=" << this->imaginary << "}";
+    return stream.str();
 }
 

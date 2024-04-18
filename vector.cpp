@@ -250,10 +250,10 @@ thmath::Vector& thmath::Vector::operator-=(const Vector& vec)
 
 std::string thmath::Vector::to_string() const
 { 
-    std::string s = "Vector{size=" + std::to_string(this->size) + ", elements=[";
+    std::string s = "Vector={size=" + std::to_string(this->size) + ", elements=[";
     for (int index = 0; index < this->size - 1; index++)
     {
-        s += std::to_string(this->entries[index]) + ",";
+        s += std::to_string(this->entries[index]) + ", ";
     }
     s += std::to_string(this->entries[this->size - 1]) + "]}";
     return s;
