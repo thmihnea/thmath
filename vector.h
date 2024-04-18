@@ -26,8 +26,8 @@
 #ifndef __THMATH_VECTOR_
 #define __THMATH_VECTOR_
 
-#define nullvec3 thmath::Vector{0, 0, 0};
-#define nullvec2 thmath::Vector{0, 0};
+#define nullvec3 thmath::Vector{0, 0, 0}
+#define nullvec2 thmath::Vector{0, 0}
 
 #include <string>
 
