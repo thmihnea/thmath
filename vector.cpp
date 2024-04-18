@@ -95,16 +95,14 @@ thmath::Vector thmath::Vector::vector_product(const Vector& vec) const
     if (this->size == 2)
     {
         double z = get_component(0) * vec.get_component(1) - get_component(1) * vec.get_component(0);
-        double result[] = {0, 0, z};
-        return Vector(3, result);
+        return Vector{0, 0, z};
     }
     else 
     {
         double x = get_component(1) * vec.get_component(2) - get_component(2) * vec.get_component(1);
         double y = -(get_component(0) * vec.get_component(2) - get_component(2) * vec.get_component(0));
         double z = get_component(0) * vec.get_component(1) - get_component(1) * vec.get_component(0);
-        double result[] = {x, y, z};
-        return Vector(3, result);
+        return Vector{x, y, z};
     }
 }
 
