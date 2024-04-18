@@ -34,7 +34,7 @@ namespace thmath
     {
     private:
         double* entries;
-        int size;
+        size_t size;
 
     public:
         /**
@@ -48,7 +48,19 @@ namespace thmath
          * all components of the vector.
          * @return A new vector object.
         */
-        Vector(const int size, double* entries);
+        Vector(const size_t size, double* entries);
+
+        /**
+         * Initializer list constructor for the Vector class.
+         * This allows the object to be constructed by initializing
+         * the objects in a list directly, without having
+         * to specify a size_t.
+         * 
+         * @param entries The entries which shall be in the
+         * vector.
+         * @return A new vector object.
+        */
+        Vector(std::initializer_list<double> entries);
 
         /**
          * Default destructor for any vector object.
@@ -72,7 +84,7 @@ namespace thmath
          * 
          * @return The size of the vector.
         */
-        int get_size() const;
+        size_t get_size() const;
 
         /**
          * Compute the Lp norm of this vector object,
@@ -124,6 +136,31 @@ namespace thmath
          * scalar product between the two quantities.
         */
         double dot_product(const Vector& vec) const;
+
+        /**
+         * Perform the vector product between the
+         * two given vector objects, and return a
+         * new vector object that represents this
+         * operation (cross product).
+         * 
+         * @param vec The vector which we are
+         * crossing with the current one.
+         * @return A new vector object representing
+         * the cross product between the two vectors.
+        */
+        Vector vector_product(const Vector& vec) const;
+
+        /**
+         * Multiplies the given vector by a real parameter,
+         * effectively re-scaling it.
+         * 
+         * @param lambda The amount by which the vector
+         * shall be rescaled.
+         * @return The newly edited vector. Note that this
+         * changes the vector itself, rather than creating
+         * a new instance.
+        */
+        Vector& scale(double lambda);
 
         /**
          * Normalizes the vector by its Lp norm.

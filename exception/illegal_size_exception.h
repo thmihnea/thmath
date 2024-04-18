@@ -21,13 +21,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __THMATH_MESSAGES_
-#define __THMATH_MESSAGES_
-
 #pragma once
 
-constexpr char* ILLEGAL_ACCESS_MESSAGE = "Attempted to perform an access into a non-existant component of the vector - check the index again.";
-constexpr char* DIFFERENT_SIZE_MESSAGE = "Attempted to perform an operation on objects of different sizes - since they do not belong to the same set, the operation is undefined.";
-constexpr char* ILLEGAL_SIZE_MESSAGE = "Attempted to perform an operation with objects of the wrong size (either a cross product or a wrong matrix multiplication).";
+#ifndef __THMATH_ILLEGAL_SIZE_EXCEPTION_
+#define __THMATH_ILLEGAL_SIZE_EXCEPTION_
+
+#include <stdexcept>
+#include <string>
+
+class IllegalSizeException : public std::exception
+{
+private:
+    std::string message;
+public:
+    IllegalSizeException(const std::string& message);
+
+    const char* what() const noexcept;
+};
 
 #endif

@@ -1,6 +1,7 @@
 #include "vector.h"
 #include "exception/illegal_access_exception.h"
 #include "exception/different_size_exception.h"
+#include "exception/illegal_size_exception.h"
 #include "exception/messages.h"
 #include <stdexcept>
 #include <iostream>
@@ -10,10 +11,20 @@
 #include <vector>
 #include <algorithm>
 
-thmath::Vector::Vector(int size, double* entries)
+thmath::Vector::Vector(size_t size, double* entries)
 {
     this->size = size;
-    this->entries = entries;
+    this->entries = new double[size];
+
+    std::copy(entries, entries + size, this->entries);
+}
+
+thmath::Vector::Vector(std::initializer_list<double> entries)
+{
+    this->size = entries.size();
+    this->entries = new double[this->size];
+
+    std::copy(entries.begin(), entries.end(), this->entries);
 }
 
 thmath::Vector::~Vector()
@@ -30,7 +41,7 @@ double thmath::Vector::get_component(const int index) const
     return this->entries[index];
 }
 
-int thmath::Vector::get_size() const
+size_t thmath::Vector::get_size() const
 {
     return this->size;
 }
@@ -73,6 +84,38 @@ double thmath::Vector::dot_product(const Vector& vec) const
     return std::inner_product(
         this->entries, this->entries + this->size, vec.entries, 0.0
     );
+}
+
+thmath::Vector thmath::Vector::vector_product(const Vector& vec) const
+{
+    if (this->size != vec.size || this->size > 3 || this->size < 2)
+    {
+        throw IllegalSizeException(ILLEGAL_SIZE_MESSAGE);
+    }
+    if (this->size == 2)
+    {
+        double z = get_component(0) * vec.get_component(1) - get_component(1) * vec.get_component(0);
+        double result[] = {0, 0, z};
+        return Vector(3, result);
+    }
+    else 
+    {
+        double x = get_component(1) * vec.get_component(2) - get_component(2) * vec.get_component(1);
+        double y = -(get_component(0) * vec.get_component(2) - get_component(2) * vec.get_component(0));
+        double z = get_component(0) * vec.get_component(1) - get_component(1) * vec.get_component(0);
+        double result[] = {x, y, z};
+        return Vector(3, result);
+    }
+}
+
+thmath::Vector& thmath::Vector::scale(double lambda)
+{
+    std::transform(
+        this->entries, this->entries + this->size, this->entries, [lambda](double element){
+            return element * lambda;
+        }
+    );
+    return *this;
 }
 
 thmath::Vector& thmath::Vector::normalized(double p)
