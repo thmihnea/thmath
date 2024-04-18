@@ -13,6 +13,10 @@
 
 thmath::Vector::Vector(size_t size, double* entries)
 {
+    if (size <= 0)
+    {
+        throw IllegalSizeException(ILLEGAL_SIZE_MESSAGE);
+    }
     this->size = size;
     this->entries = new double[size];
 
@@ -21,6 +25,10 @@ thmath::Vector::Vector(size_t size, double* entries)
 
 thmath::Vector::Vector(std::initializer_list<double> entries)
 {
+    if (entries.size() <= 0)
+    {
+        throw IllegalSizeException(ILLEGAL_SIZE_MESSAGE);
+    }
     this->size = entries.size();
     this->entries = new double[this->size];
 
@@ -142,6 +150,48 @@ double thmath::Vector::angle(const Vector& vec, bool cosine) const
     return cosine ? cos : std::acos(cos);
 }
 
+bool thmath::Vector::is_parallel(const Vector& vec) const
+{
+    if (this->size != vec.size)
+    {
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
+    }
+
+    double this_x = get_component(0);
+    double vec_x = vec.get_component(0);
+    const double constant = this_x / vec_x;
+
+    for (size_t index = 0; index < this->size; index++)
+    {
+        if (get_component(index) / vec.get_component(index) != constant)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool thmath::Vector::is_perpendicular(const Vector& vec) const
+{
+    return dot_product(vec) == 0;
+}
+
+bool thmath::Vector::operator==(const Vector& vec) const
+{
+    if (this->size != vec.size)
+    {
+        return false;
+    }
+    for (size_t index = 0; index < this->size; index++)
+    {
+        if (get_component(index) != vec.get_component(index))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 thmath::Vector thmath::Vector::operator+(const Vector& vec) const
 {
     if (this->size != vec.size)
@@ -156,6 +206,20 @@ thmath::Vector thmath::Vector::operator+(const Vector& vec) const
     return Vector(this->size, final_entries);
 }
 
+thmath::Vector& thmath::Vector::operator+=(const Vector& vec)
+{
+    if (this->size != vec.size)
+    {
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
+    }
+    std::transform(
+            this->entries, this->entries + this->size, vec.entries, this->entries, [](double a, double b){
+            return a + b;
+        }
+    );
+    return *this;
+}
+
 thmath::Vector thmath::Vector::operator-(const Vector& vec) const
 {
     if (this->size != vec.size)
@@ -168,6 +232,20 @@ thmath::Vector thmath::Vector::operator-(const Vector& vec) const
         final_entries[index] = this->entries[index] - vec.entries[index];
     }
     return Vector(this->size, final_entries);
+}
+
+thmath::Vector& thmath::Vector::operator-=(const Vector& vec)
+{
+    if (this->size != vec.size)
+    {
+        throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
+    }
+    std::transform(
+            this->entries, this->entries + this->size, vec.entries, this->entries, [](double a, double b){
+            return a - b;
+        }
+    );
+    return *this;
 }
 
 std::string thmath::Vector::to_string() const

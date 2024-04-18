@@ -200,6 +200,29 @@ namespace thmath
         double angle(const Vector& vec, bool cosine = false) const;
 
         /**
+         * Check whether or not the two given vectors
+         * are parallel. Note that this simply checks
+         * whether there exists a constant k such that
+         * vec_2 = k * vec_1, essentially.
+         * 
+         * @param vec The vector which we are checking
+         * parallelism for.
+         * @return Whether or not they are parallel.
+        */
+        bool is_parallel(const Vector& vec) const;
+
+        /**
+         * Check whether or not the two given vectors
+         * are perpendicular. Note that this simply checks
+         * whether their scalar product is null.
+         * 
+         * @param vec The vector which we are checking
+         * perpendicularity with.
+         * @return Whether or not they are perpendicular.
+        */
+        bool is_perpendicular(const Vector& vec) const;
+
+        /**
          * Operator overloading for vector addition.
          * 
          * @param vec The vector which we are adding
@@ -210,6 +233,16 @@ namespace thmath
         Vector operator+(const Vector& vec) const;
 
         /**
+         * Operator overloading for vector addition,
+         * but without generating a new vector object.
+         * Rather, the result is added to the current vector.
+         * 
+         * @param vec The vector which shall be added.
+         * @return The modified vector.
+        */
+        Vector& operator+=(const Vector& vec);
+
+        /**
          * Operator overloading for vector subtraction.
          * 
          * @param vec The vector which will be subtracted 
@@ -218,6 +251,26 @@ namespace thmath
          * difference of the two vectors.
         */
         Vector operator-(const Vector& vec) const;
+
+        /**
+         * Operator overloading for vector subtraction,
+         * but without generating a new vector object.
+         * Rather, the result is subtracted from the current vector.
+         * 
+         * @param vec The vector which shall be subtracted.
+         * @return The modified vector.
+        */
+        Vector& operator-=(const Vector& vec);
+
+        /**
+         * Operator overloading for vector equality.
+         * 
+         * @param vec The vector which will be checked
+         * against our current vector.
+         * @return Whether or not the two vectors are
+         * equal component-wise.
+        */
+        bool operator==(const Vector& vec) const;
 
         /**
          * Stringify the vector object for it to be
