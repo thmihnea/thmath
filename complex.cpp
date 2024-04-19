@@ -27,7 +27,6 @@
 #include <cmath>
 #include <algorithm>
 #include <sstream>
-#include <iostream>
 
 thmath::Complex::Complex(double real, double imaginary)
 {
