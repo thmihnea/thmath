@@ -7,6 +7,7 @@ add_executable(
     exception/illegal_size_exception.cpp
     exception/illegal_access_exception.cpp 
     exception/different_size_exception.cpp 
-    vector.cpp
-    complex.cpp
+    math/vector.cpp
+    math/complex.cpp
+    math/line.cpp
 )

@@ -22,8 +22,8 @@
  */
 
 #include "complex.h"
-#include "exception/illegal_size_exception.h"
-#include "exception/messages.h"
+#include "../exception/illegal_size_exception.h"
+#include "../exception/messages.h"
 #include <cmath>
 #include <algorithm>
 #include <sstream>
