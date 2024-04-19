@@ -27,6 +27,7 @@
 #include <cmath>
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 
 thmath::Complex::Complex(double real, double imaginary)
 {
@@ -42,7 +43,7 @@ thmath::Complex::Complex(std::initializer_list<double> args)
     }
     auto it = args.begin();
     this->real = *it;
-    this->imaginary = *(it++);
+    this->imaginary = *(++it);
 }
 
 thmath::Complex::~Complex()
@@ -69,10 +70,7 @@ double thmath::Complex::norm() const
 
 double thmath::Complex::argument() const
 {
-    return std::atan2(
-        this->imaginary,
-        this->real
-    );
+    return std::atan(this->imaginary / this->real);
 }
 
 thmath::Complex thmath::Complex::conjugate() const
@@ -128,6 +126,20 @@ thmath::Complex& thmath::Complex::operator*=(const Complex& complex)
     imaginary = result_imaginary;
     return *this;
 }
+
+thmath::Complex thmath::Complex::operator^(const Complex& complex) const 
+{
+    double a = complex.real;
+    double b = complex.imaginary;
+    double arg = argument();
+    double log = std::log(norm());
+
+    double new_norm = std::exp(a*log - b*arg);
+    double theta = a*arg + b*log;
+
+    return {new_norm * std::cos(theta), new_norm * std::sin(theta)};
+}
+
 
 std::string thmath::Complex::to_string() const
 {

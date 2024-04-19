@@ -152,6 +152,15 @@ namespace thmath
          * @return The result of the multiplication operation.
         */
         Complex& operator*=(const Complex& complex);
+
+        /**
+         * Raises a complex number to another complex number.
+         * 
+         * @param complex The number which is used as the exponent
+         * to our current base.
+         * @return The result of the exponentiation.
+        */
+        Complex operator^(const Complex& complex) const;
         
         /**
          * Stringify the complex number object for it to be
