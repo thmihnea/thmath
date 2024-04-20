@@ -46,6 +46,11 @@ thmath::Vector::Vector(size_t size, double* entries)
     std::copy(entries, entries + size, this->entries);
 }
 
+thmath::Vector::Vector(const Vector& other) : size(other.size), entries(new double[other.size])
+{
+    std::copy(other.entries, other.entries + other.size, this->entries);
+}
+
 thmath::Vector::Vector(std::initializer_list<double> entries)
 {
     if (entries.size() <= 0)
@@ -220,6 +225,18 @@ bool thmath::Vector::operator==(const Vector& vec) const
     return true;
 }
 
+thmath::Vector& thmath::Vector::operator=(const Vector& vec)
+{
+    if (this != &vec)
+    {
+        delete[] this->entries;
+        this->size = vec.size;
+        this->entries = new double[vec.size];
+        std::copy(vec.entries, vec.entries + vec.size, this->entries);
+    }
+    return *this;
+}
+
 thmath::Vector thmath::Vector::operator+(const Vector& vec) const
 {
     if (this->size != vec.size)
@@ -231,9 +248,7 @@ thmath::Vector thmath::Vector::operator+(const Vector& vec) const
     {
         final_entries[index] = this->entries[index] + vec.entries[index];
     }
-    Vector result(this->size, final_entries);
-    delete[] final_entries;
-    return result;
+    return Vector(this->size, final_entries);
 }
 
 thmath::Vector& thmath::Vector::operator+=(const Vector& vec)
@@ -261,9 +276,7 @@ thmath::Vector thmath::Vector::operator-(const Vector& vec) const
     {
         final_entries[index] = this->entries[index] - vec.entries[index];
     }
-    Vector result(this->size, final_entries);
-    delete[] final_entries;
-    return result;
+    return Vector(this->size, final_entries);
 }
 
 thmath::Vector& thmath::Vector::operator-=(const Vector& vec)
@@ -288,9 +301,7 @@ thmath::Vector thmath::Vector::operator*(double lambda) const
             return lambda * d;
         }
     );
-    Vector result(this->size, scaled);
-    delete[] scaled;
-    return result;
+    return Vector(this->size, scaled);
 }
 
 thmath::Vector& thmath::Vector::operator*=(double lambda)

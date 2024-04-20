@@ -66,6 +66,14 @@ namespace thmath
         Vector(std::initializer_list<double> entries);
 
         /**
+         * Copy constructor for the vector class.
+         * 
+         * @param other The vector which shall be copied.
+         * @return A new vector object.
+        */
+        Vector(const Vector& other);
+
+        /**
          * Default destructor for any vector object.
         */
         ~Vector();
@@ -299,6 +307,15 @@ namespace thmath
          * equal component-wise.
         */
         bool operator==(const Vector& vec) const;
+
+        /**
+         * Assignment operator overloading.
+         * 
+         * @param other The vector which shall be
+         * assigned.
+         * @return A new vector.
+        */
+        Vector& operator=(const Vector& other);
 
         /**
          * Stringify the vector object for it to be

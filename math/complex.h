@@ -58,6 +58,15 @@ namespace thmath
         Complex(std::initializer_list<double> args);
 
         /**
+         * Copy constructor for the complex class.
+         * 
+         * @param other The complex number which will be
+         * copied into this one.
+         * @return A new complex number object.
+        */
+        Complex(const Complex& other);
+
+        /**
          * Destructor for the Complex class.
         */
         ~Complex();
@@ -104,6 +113,15 @@ namespace thmath
          * @return True if the complex numbers are equal, false otherwise.
         */
         bool operator==(const Complex& complex) const;
+
+        /**
+         * Overloaded assignment operator for complex numbers.
+         * 
+         * @param other The complex numbers which shall be
+         * assigned to this one.
+         * @return A new complex number object.
+        */
+        Complex& operator=(const Complex& other);
 
         /**
          * Overloaded addition operator for adding two complex numbers.

@@ -45,6 +45,11 @@ thmath::Complex::Complex(std::initializer_list<double> args)
     this->imaginary = *(++it);
 }
 
+thmath::Complex::Complex(const Complex& other) : real(other.real), imaginary(other.imaginary)
+{
+
+}
+
 thmath::Complex::~Complex()
 {
     
@@ -83,6 +88,16 @@ thmath::Complex thmath::Complex::conjugate() const
 bool thmath::Complex::operator==(const Complex& complex) const 
 {
     return (this->real == complex.real) && (this->imaginary == complex.imaginary);
+}
+
+thmath::Complex& thmath::Complex::operator=(const Complex& other)
+{
+    if (this != &other)
+    {
+        this->real = other.real;
+        this->imaginary = other.imaginary;
+    }
+    return *this;
 }
 
 thmath::Complex thmath::Complex::operator+(const Complex& complex) const 
