@@ -26,7 +26,6 @@
 #include <cmath>
 #include <stdexcept>
 #include <sstream>
-#include <iostream>
 
 thmath::Line::Line(const thmath::Vector& point_a, const thmath::Vector& point_b)
 {
