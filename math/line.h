@@ -27,6 +27,7 @@
 #define __THMATH_LINE_
 
 #include "vector.h"
+#include <string>
 
 namespace thmath
 {
@@ -49,6 +50,13 @@ namespace thmath
          * @param point_b The second point.
         */
         Line(const Vector& point_a, const Vector& point_b);
+
+        /**
+         * Copy constructor for the line class.
+         * 
+         * @param other The line object to copy from.
+        */
+       Line(const Line& other);
 
         /**
          * Destructor for the Line class.
@@ -117,6 +125,33 @@ namespace thmath
          * @return True if this line is parallel to the other line, false otherwise.
          */
         bool is_parallel(const Line& line) const;
+
+        /**
+         * Assignment operator overload for the line class
+         * 
+         * @param other The object to assign from.
+         * @return A reference to the assigned object.
+        */
+        Line& operator=(const Line& other);
+
+        /**
+         * Equality operator overloading between
+         * two lines.
+         * 
+         * @param other The object which shall be
+         * checked with the current line.
+         * @return Whether or not the two lines
+         * are equal.
+        */
+        bool operator==(const Line& other) const;
+
+        /**
+         * Stringify the line and return. This
+         * method can be used for debugging purposes.
+         * 
+         * @return The stringified line.
+        */
+        std::string to_string() const;
     };
 }
 

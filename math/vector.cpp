@@ -190,18 +190,7 @@ bool thmath::Vector::is_parallel(const Vector& vec) const
         throw DifferentSizeException(DIFFERENT_SIZE_MESSAGE);
     }
 
-    double this_x = get_component(0);
-    double vec_x = vec.get_component(0);
-    const double constant = this_x / vec_x;
-
-    for (size_t index = 0; index < this->size; index++)
-    {
-        if (get_component(index) / vec.get_component(index) != constant)
-        {
-            return false;
-        }
-    }
-    return true;
+    return std::abs(dot_product(vec)) == norm() * vec.norm();
 }
 
 bool thmath::Vector::is_perpendicular(const Vector& vec) const

@@ -25,6 +25,8 @@
 #include "vector.h"
 #include <cmath>
 #include <stdexcept>
+#include <sstream>
+#include <iostream>
 
 thmath::Line::Line(const thmath::Vector& point_a, const thmath::Vector& point_b)
 {
@@ -100,4 +102,33 @@ bool thmath::Line::is_perpendicular(const Line& line) const
 bool thmath::Line::is_parallel(const Line& line) const
 {
     return (*this->direction).vector_product(*line.direction) == nullvec3;
+}
+
+thmath::Line::Line(const Line& other) {
+    position_a = new thmath::Vector(*other.position_a);
+    direction = new thmath::Vector(*other.direction);
+}
+
+thmath::Line& thmath::Line::operator=(const thmath::Line& other)
+{
+    if (this != &other)
+    {
+        delete this->position_a;
+        delete this->direction;
+        this->position_a = new thmath::Vector(*other.position_a);
+        this->direction = new thmath::Vector(*other.direction);
+    }
+    return *this;
+}
+
+bool thmath::Line::operator==(const thmath::Line& other) const
+{
+    return is_parallel(other) && contains(*(other.position_a));
+}
+
+std::string thmath::Line::to_string() const
+{
+    std::ostringstream stream;
+    stream << "Line={position_a=" << this->position_a->to_string() << ", direction=" << this->direction->to_string() << "}";
+    return stream.str();
 }
