@@ -72,6 +72,11 @@ double thmath::Vector::get_component(const int index) const
     return this->entries[index];
 }
 
+double* thmath::Vector::get_entries() const
+{
+    return this->entries;
+}
+
 size_t thmath::Vector::get_size() const
 {
     return this->size;
@@ -226,7 +231,9 @@ thmath::Vector thmath::Vector::operator+(const Vector& vec) const
     {
         final_entries[index] = this->entries[index] + vec.entries[index];
     }
-    return Vector(this->size, final_entries);
+    Vector result(this->size, final_entries);
+    delete[] final_entries;
+    return result;
 }
 
 thmath::Vector& thmath::Vector::operator+=(const Vector& vec)
@@ -254,7 +261,9 @@ thmath::Vector thmath::Vector::operator-(const Vector& vec) const
     {
         final_entries[index] = this->entries[index] - vec.entries[index];
     }
-    return Vector(this->size, final_entries);
+    Vector result(this->size, final_entries);
+    delete[] final_entries;
+    return result;
 }
 
 thmath::Vector& thmath::Vector::operator-=(const Vector& vec)
@@ -266,6 +275,29 @@ thmath::Vector& thmath::Vector::operator-=(const Vector& vec)
     std::transform(
             this->entries, this->entries + this->size, vec.entries, this->entries, [](double a, double b){
             return a - b;
+        }
+    );
+    return *this;
+}
+
+thmath::Vector thmath::Vector::operator*(double lambda) const
+{
+    double* scaled = new double[this->size];
+    std::transform(
+        this->entries, this->entries + this->size, scaled, [lambda](double d){
+            return lambda * d;
+        }
+    );
+    Vector result(this->size, scaled);
+    delete[] scaled;
+    return result;
+}
+
+thmath::Vector& thmath::Vector::operator*=(double lambda)
+{
+    std::transform(
+        this->entries, this->entries + this->size, this->entries, [lambda](double d){
+            return lambda * d;
         }
     );
     return *this;

@@ -81,6 +81,14 @@ namespace thmath
         double get_component(const int index) const;
 
         /**
+         * Obtain the array containing all the entries
+         * for this vector object.
+         * 
+         * @return The entries inside this vector object.
+        */
+        double* get_entries() const;
+
+        /**
          * Return the size of the vector, i.e. the
          * value of n for the vector space R^n
          * containing this vector object.
@@ -261,6 +269,26 @@ namespace thmath
          * @return The modified vector.
         */
         Vector& operator-=(const Vector& vec);
+
+        /**
+         * Multiply the given vector by the said
+         * real parameter, and return a new vector.
+         * 
+         * @param lambda The amount by which the
+         * vector should be scaled.
+         * @return A new vector scaled by lambda.
+        */
+        Vector operator*(double lambda) const;
+
+        /**
+         * Multiply the given vector by the said
+         * real parameter, modifying it and returning
+         * itself.
+         * 
+         * @param lambda The scale factor.
+         * @return The scaled vector itself.
+        */
+        Vector& operator*=(double lambda);
 
         /**
          * Operator overloading for vector equality.

@@ -20,3 +20,84 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+#include "line.h"
+#include "vector.h"
+#include <cmath>
+#include <stdexcept>
+
+thmath::Line::Line(const thmath::Vector& point_a, const thmath::Vector& point_b)
+{
+    auto direction = point_b - point_a;
+    this->position_a = new thmath::Vector(point_a.get_size(), point_a.get_entries());
+    this->direction = new thmath::Vector(direction.get_size(), direction.get_entries());
+}
+
+thmath::Line::~Line()
+{
+    delete this->position_a;
+    delete this->direction;
+}
+
+thmath::Vector thmath::Line::get_direction() const
+{
+    return *this->direction;
+}
+
+thmath::Vector thmath::Line::get_point(double lambda) const
+{
+    return (*this->position_a) + (*this->direction * lambda);
+}
+
+bool thmath::Line::contains(const thmath::Vector& point) const
+{
+    auto potential_direction = point - *this->position_a;
+    return potential_direction.is_parallel(point);
+}
+
+double thmath::Line::distance(const thmath::Vector& point) const
+{
+    auto diff = point - *this->position_a;
+    diff = diff.vector_product(*this->direction);
+    return (diff *= (1 / this->direction->norm())).norm();
+}
+
+double thmath::Line::distance(const thmath::Line& line) const
+{
+    if (is_parallel(line))
+    {
+        return distance(*line.position_a);
+    }
+
+    auto normal = (*this->direction).vector_product(*line.direction).normalized();
+    auto diff = *this->position_a - *line.position_a;
+    return std::abs(
+        diff.dot_product(normal)
+    );
+}
+
+thmath::Vector thmath::Line::intersect(const Line& line) const
+{
+    if (is_parallel(line))
+    {
+        throw std::exception();
+    }
+
+    Vector positionDifference = *line.position_a - *position_a;
+    Vector crossProduct1 = positionDifference.vector_product(line.get_direction());
+    Vector crossProduct2 = direction->vector_product(line.get_direction());
+    double lambda = crossProduct1.dot_product(crossProduct2) / std::pow(crossProduct2.norm(), 2);
+
+
+    return get_point(lambda);
+}
+
+bool thmath::Line::is_perpendicular(const Line& line) const
+{
+    return (*this->direction).dot_product(*line.direction) == 0;
+}
+
+bool thmath::Line::is_parallel(const Line& line) const
+{
+    return (*this->direction).vector_product(*line.direction) == nullvec3;
+}

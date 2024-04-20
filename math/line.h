@@ -36,17 +36,19 @@ namespace thmath
     class Line
     {
     private:
-        Vector position_a;  /**< The position vector of a point on the line. */
-        Vector direction;   /**< The direction vector of the line. */
+        Vector* position_a;  /**< The position vector of a point on the line. */
+        Vector* direction;   /**< The direction vector of the line. */
         
     public:
+
         /**
-         * Constructor for the Line class.
+         * Constructor for the Line class. This
+         * creates the line between the two given points.
          * 
-         * @param position_a A vector representing a point on the line.
-         * @param direction A vector representing the direction of the line.
-         */
-        Line(const Vector& position_a, const Vector& direction);
+         * @param point_a The first point.
+         * @param point_b The second point.
+        */
+        Line(const Vector& point_a, const Vector& point_b);
 
         /**
          * Destructor for the Line class.
